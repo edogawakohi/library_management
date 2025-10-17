@@ -1,0 +1,34 @@
+name: Go Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ✅ Bước 1: Checkout source code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ✅ Bước 2: Cài Go version bạn dùng
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.25
+
+      # ✅ Bước 3: Cài dependency
+      - name: Download dependencies
+        run: go mod tidy
+
+      # ✅ Bước 4: Build project
+      - name: Build
+        run: go build -v ./...
+
+      # (tuỳ chọn)
+      - name: Run tests
+        run: go test ./...
