@@ -1,6 +1,6 @@
 # 🐹 Exploring and Enjoying Golang – Library Management System
 
-![Go Logo](https://upload.wikimedia.org/wikipedia/commons/0/05/Go_Logo_Blue.svg){width=60}
+![Go Logo](https://upload.wikimedia.org/wikipedia/commons/0/05/Go_Logo_Blue.svg)
 
 Welcome to the **Library Management System**, a console-based program written in **Go (Golang)**.  
 This project demonstrates how to manage a simple library, including books, borrowers, and borrowing records.
