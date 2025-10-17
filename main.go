@@ -22,21 +22,21 @@ func main() {
 		utils.ClearScreen()
 		switch choice {
 		case 1:
-			fmt.Println("a")
+			fmt.Println("===Add books===")
 		case 2:
-			fmt.Println("a")
+			fmt.Println("===List books===")
 		case 3:
-			fmt.Println("a")
+			fmt.Println("===Add people borrowing books===")
 		case 4:
-			fmt.Println("a")
+			fmt.Println("===List people borrowing books===")
 		case 5:
-			fmt.Println("a")
+			fmt.Println("===Borrowing books===")
 		case 6:
-			fmt.Println("a")
+			fmt.Println("===Books borrowing history===")
 		case 7:
-			fmt.Println("a")
+			fmt.Println("===Return books===")
 		case 8:
-			fmt.Println("a")
+			fmt.Println("===Search books===")
 		case 9:
 			return
 		default:
