@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"unicode"
+
+	"github.com/google/uuid"
 )
 
 func ReadInput(promt string) string {
@@ -88,19 +90,6 @@ func CheckString(promt string) string {
 			continue
 		}
 
-		isNumber := false
-		for _, ch := range input {
-			if unicode.IsDigit(ch) {
-				isNumber = true
-				break
-			}
-		}
-
-		if isNumber {
-			fmt.Println("Input cannot contain number!!!")
-			continue
-		}
-
 		isSpecial := false
 		for _, ch := range input {
 			if !unicode.IsDigit(ch) && !unicode.IsLetter(ch) && ch != ' ' {
@@ -134,4 +123,8 @@ func ClearScreen() {
 	if err != nil {
 		fmt.Println("Error clearing screen: ", err)
 	}
+}
+
+func GenerateId() string {
+	return uuid.New().String()
 }
