@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
@@ -106,6 +107,23 @@ func CheckString(promt string) string {
 		return input
 	}
 
+}
+
+func CheckEmail(promt string) string {
+	for {
+		input := ReadInput("Input email:  ")
+
+		if input == "" {
+			fmt.Println("Please input cannot empty!!!")
+			continue
+		}
+		re := regexp.MustCompile(`^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`)
+		if !re.MatchString(input) {
+			fmt.Println("Incorrect format email!!!")
+			continue
+		}
+		return input
+	}
 }
 
 func ClearScreen() {

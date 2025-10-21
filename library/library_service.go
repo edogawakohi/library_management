@@ -5,6 +5,7 @@ import (
 	"main/model"
 	"main/utils"
 	"strings"
+	"time"
 )
 
 func AddBook(lib *Library) error {
@@ -13,7 +14,7 @@ func AddBook(lib *Library) error {
 	author := utils.CheckString("Input author: ")
 
 	if _, err := lib.book[id]; err {
-		return fmt.Errorf("Book with id: %s da ton tai!", id)
+		return fmt.Errorf("book with id: %s already exist", id)
 	}
 
 	lib.book[id] = model.Book{
@@ -42,11 +43,42 @@ func ListBook(lib *Library) error {
 	return nil
 }
 
-func AddBorrower() error {
+func AddBorrower(lib *Library) error {
+
+	id := utils.GenerateId()
+	name := utils.CheckString("Input name: ")
+	email := utils.CheckEmail("Input email: ")
+	dateBorrow := time.Time{}
+	dateReturn := time.Time{}
+
+	if _, err := lib.borrower[id]; err {
+		return fmt.Errorf("borrower id %s already exist", id)
+	}
+
+	lib.borrower[id] = model.Borrower{
+		Id:         id,
+		Name:       name,
+		Email:      email,
+		DateBorrow: dateBorrow,
+		DateReturn: dateReturn,
+	}
+	fmt.Println("Added Successfully!!!")
 	return nil
 }
 
-func ListBorrower() error {
+func ListBorrower(lib *Library) error {
+	if len(lib.borrower) == 0 {
+		fmt.Println("The library currently has no borrower!")
+		return nil
+	}
+
+	fmt.Printf("%-11s|%-15s|%15s|%-12s|%-10s\n", "ID", "NAME", "EMAIL", "DATE BORROW", "DATE RETURN")
+	fmt.Println(strings.Repeat("-", 50))
+
+	for _, borrower := range lib.borrower {
+		fmt.Print(borrower.GetInfo())
+	}
+
 	return nil
 }
 
