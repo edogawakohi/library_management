@@ -109,6 +109,20 @@ func CheckString(promt string) string {
 
 }
 
+func CheckStringId(promt string) string {
+
+	for {
+		input := ReadInput(promt)
+
+		if input == "" {
+			fmt.Println("Please input cannot empty!!!")
+			continue
+		}
+		return input
+	}
+
+}
+
 func CheckEmail(promt string) string {
 	for {
 		input := ReadInput("Input email:  ")

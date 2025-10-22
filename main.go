@@ -8,9 +8,6 @@ import (
 
 func main() {
 	lib := library.NewLibrary()
-
-	borrower := library.NewBorrower()
-
 	for {
 		fmt.Println("===Library===")
 		fmt.Println("1. Add books")
@@ -39,17 +36,17 @@ func main() {
 			}
 		case 3:
 			fmt.Println("===Add people borrowing books===")
-			if err := library.AddBorrower(borrower); err != nil {
+			if err := library.AddBorrower(lib); err != nil {
 				fmt.Printf("Error: %s\n", err)
 			}
 		case 4:
 			fmt.Println("===List people borrowing books===")
-			if err := library.ListBorrower(borrower); err != nil {
+			if err := library.ListBorrower(lib); err != nil {
 				fmt.Printf("Error: %s\n", err)
 			}
 		case 5:
 			fmt.Println("===Borrowing books===")
-			if err := library.BorrowBook(); err != nil {
+			if err := library.BorrowBook(lib); err != nil {
 				fmt.Printf("Error: %s\n", err)
 			}
 		case 6:
