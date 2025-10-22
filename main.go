@@ -51,17 +51,17 @@ func main() {
 			}
 		case 6:
 			fmt.Println("===Books borrowing history===")
-			if err := library.ListHistory(); err != nil {
+			if err := library.ListHistory(lib); err != nil {
 				fmt.Printf("Error: %s\n", err)
 			}
 		case 7:
 			fmt.Println("===Return books===")
-			if err := library.ReturnBook(); err != nil {
+			if err := library.ReturnBook(lib); err != nil {
 				fmt.Printf("Error: %s\n", err)
 			}
 		case 8:
 			fmt.Println("===Search books===")
-			if err := library.SearchBook(); err != nil {
+			if err := library.SearchBook(lib); err != nil {
 				fmt.Printf("Error: %s\n", err)
 			}
 		case 9:

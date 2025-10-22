@@ -81,15 +81,6 @@ func ListBorrower(lib *Library) error {
 }
 
 func BorrowBook(lib *Library) error {
-	fmt.Println("DEBUG: Current borrowers in library:")
-	for id, b := range lib.borrower {
-		fmt.Printf("ID: %s | Name: %s | Email: %s\n", id, b.Name, b.Email)
-	}
-
-	fmt.Println("DEBUG: Current book in library:")
-	for id := range lib.book {
-		fmt.Printf("ID: %s \n", id)
-	}
 	for {
 		bookId := utils.CheckStringId("Input book Id: ")
 		borrowId := utils.CheckStringId("Input borrowId: ")
@@ -131,14 +122,92 @@ func BorrowBook(lib *Library) error {
 	}
 }
 
-func ListHistory() error {
+func ListHistory(lib *Library) error {
+	if len(lib.transaction) == 0 {
+		fmt.Println("No one borrowed the book")
+		return nil
+	}
+	fmt.Printf("%-11s | %-30s | %-30s | %-20s | %-20s\n", "TRANSACTION ID", "BOOK NAME", "BORROWER", "BORROW DATE", "RETURN DATE")
+	fmt.Println(strings.Repeat("-", 150))
+
+	for _, transaction := range lib.transaction {
+		var bookName string
+		var borrowerName string
+
+		if book, exist := lib.book[transaction.BookId]; exist {
+			bookName = book.Title
+		}
+
+		if borrower, exist := lib.borrower[transaction.BorrowId]; exist {
+			borrowerName = borrower.Name
+		}
+
+		returnBook := " "
+		if !transaction.DateReturn.IsZero() {
+			returnBook = transaction.DateReturn.Format("2006-01-02")
+		}
+
+		fmt.Printf("%-11s | %-20s | %-20s | %-20s | %-20s\n",
+			transaction.TransactionId, bookName, borrowerName, transaction.DateBorrow.Format("2006-01-02"),
+			returnBook)
+
+	}
+
 	return nil
 }
 
-func ReturnBook() error {
-	return nil
+func ReturnBook(lib *Library) error {
+
+	if len(lib.transaction) == 0 {
+		fmt.Println("No one borrowed the book")
+		return nil
+	}
+
+	for {
+		transactionId := utils.CheckStringId("Input transaction id: ")
+
+		transaction, exist := lib.transaction[transactionId]
+
+		if !exist {
+			fmt.Println("Not found!!!")
+			continue
+		}
+
+		book, check := lib.book[transaction.BookId]
+
+		if !check {
+			fmt.Println("This book is not available in the transaction")
+		} else {
+			book.IsBorrow = false
+			lib.book[transaction.BookId] = book
+			transaction.DateReturn = time.Now()
+			lib.transaction[transactionId] = transaction
+			fmt.Println("Return book is successful!!!")
+			return nil
+		}
+	}
+
 }
 
-func SearchBook() error {
+func SearchBook(lib *Library) error {
+	if len(lib.transaction) == 0 {
+		fmt.Println("There are no books in the library")
+		return nil
+	}
+
+	inputSearch := utils.CheckString("Looking for: ")
+
+	fmt.Printf("%-11s|%-15s|%-10s|%-5s\n", "ID", "TITLE", "AUTHOR", "STATUS")
+	fmt.Println(strings.Repeat("-", 40))
+
+	for _, book := range lib.book {
+		//chuoi goc
+		if strings.Contains(strings.ToLower(book.Title), strings.ToLower(inputSearch)) ||
+			strings.Contains(strings.ToLower(book.Author), strings.ToLower(inputSearch)) {
+			fmt.Println(book.GetInfoBook())
+		}
+
+	}
 	return nil
+
 }
